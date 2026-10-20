@@ -1,33 +1,21 @@
-# SILAS — Premium Dashboard + Profil Direktur + Hapus Tahap
+# SILAS Premium Dashboard Update
 
-Pembaruan ini dibuat dari ZIP project SILAS yang kamu unggah. `supabase-config.js` sengaja tidak disertakan agar konfigurasi project milikmu tetap dipertahankan.
+## What changed
+- Dashboard desktop: director card is positioned in the right column beside the period overview.
+- Dashboard mobile: director card becomes a full-width, touch-friendly card with photo above the name, role, and quote.
+- Summary and quick-action cards have premium gradients, softer shadows, and hover states.
+- Laundry records table now has an **Aksi / Hapus** column.
+- Deleting a record asks for confirmation, deletes only the selected row from `catatan_laundry`, then reloads stage totals and dashboard summaries.
 
-## Perubahan
-- Dashboard mobile-first dengan card statistik lebih premium.
-- Foto masjid menjadi latar hero dengan gerakan zoom lembut; foto santri tampil di kartu sambutan terpisah, bukan sebagai gambar kecil yang tidak cocok.
-- Posisi logo Dayah dan placeholder logo Laundry dirapikan, termasuk tampilan HP.
-- Kartu Direktur tampil di dashboard pada HP dan laptop. Urutannya: foto, nama, jabatan, lalu pesan/motto.
-- Foto Direktur, nama, jabatan, dan pesan dapat diubah dari menu Pengaturan Laporan.
-- Animasi ringan dan mendukung pengaturan `prefers-reduced-motion`.
-- Tombol Hapus Tahap tersedia pada setiap tahap yang dibuat. Menghapus tahap juga menghapus semua catatan laundry pada tahap tersebut setelah konfirmasi.
+## Apply update
+1. Back up your current SILAS folder.
+2. Copy `index.html`, `app.js`, `styles.css`, and `assets/` from this package into your current project, replacing files with the same names.
+3. Keep your existing `supabase-config.js`; it is intentionally not included here.
+4. Run `npx serve .` and test with a test record first.
+5. Push the updated files to GitHub to update GitHub Pages.
 
-## Cara menerapkan
-1. Buat cadangan folder project SILAS yang sekarang.
-2. Ekstrak ZIP pembaruan ini.
-3. Salin `index.html`, `app.js`, `styles.css`, folder `assets`, dan folder `sql` ke folder project SILAS. Ganti file yang sama.
-4. Jangan ganti `supabase-config.js`.
-5. Di Supabase > SQL Editor, jalankan `sql/04_profil_direktur.sql`. Ini menambahkan kolom profil direktur ke tabel `pengaturan_laporan` yang sudah ada.
-6. Jalankan `npx serve .` di terminal folder project dan uji login.
+## Deleting laundry records
+The delete button removes one `catatan_laundry` row after confirmation. It is a permanent action and affects report totals. The logged-in user must have DELETE permission under Supabase RLS. The RLS policy created earlier for authenticated users allows it; if your policies were changed, verify the delete permission in Supabase.
 
-## Mengatur foto dan identitas Direktur
-Buka menu **Pengaturan Laporan**. Di bagian **Profil Direktur di Dashboard**, unggah foto resmi direktur (PNG, JPG, atau WebP, maksimal 1 MB), isi nama, jabatan, dan pesan, lalu klik **Simpan pengaturan laporan**. Foto tidak akan tersimpan ke database sebelum tombol Simpan ditekan.
-
-Karena foto disimpan sebagai data URL di `pengaturan_laporan`, gunakan file kecil maksimal 1 MB. Untuk aplikasi dengan banyak pengguna atau file besar, lebih baik pindahkan foto ke Supabase Storage.
-
-## Hapus tahap
-Pada menu **Periode & tahap**, setiap tahap yang dibuat memiliki tombol **Hapus tahap**. Sistem meminta konfirmasi karena semua catatan laundry pada tahap tersebut akan ikut dihapus. Unduh laporan terlebih dahulu jika catatan tersebut masih dibutuhkan.
-
-## Catatan
-- Kartu direktur menampilkan placeholder sampai foto resmi diunggah. Tidak ada foto orang palsu yang diperlakukan sebagai direktur sebenarnya.
-- Uji di browser lokal dahulu, lalu commit/push ke GitHub agar GitHub Pages mendapatkan pembaruan.
-- Jangan pernah menaruh Supabase secret/service_role key di frontend atau repository publik.
+## Note
+This package was syntax-checked with Node.js (`node --check app.js`) but was not connected to the user's live Supabase project during testing.

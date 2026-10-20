@@ -92,6 +92,7 @@
           <div class="hero-bottom-line"><span>RUHUL QUR’ANI</span><i class="hero-bottom-dot"></i><span>ADMINISTRASI LAUNDRY SANTRI</span></div>
         </section>
 
+        <div class="dashboard-intro-grid">
         <section class="welcome-photo-card" aria-label="Santri Dayah Ruhul Qur'ani">
           <img src="./assets/santri-berkelompok.jpg" alt="Foto santri Dayah Ruhul Qur'ani berkelompok">
           <div class="welcome-photo-overlay"></div>
@@ -103,6 +104,23 @@
           <div class="welcome-photo-caption"><span class="caption-dot"></span> Dayah Ruhul Qur’ani</div>
         </section>
 
+          <section class="director-section director-side-section">
+            <div class="director-section-heading"><div><p class="eyebrow">ARAHAN & MOTIVASI</p><h2>Direktur Badan Usaha Dayah</h2><p class="muted">Pesan dan motivasi untuk pelayanan yang lebih baik.</p></div><span class="director-section-mark">✦</span></div>
+            <article class="director-card" id="directorCard">
+              <div class="director-photo-wrap" id="directorDashboardPhoto">
+                <div class="director-photo-placeholder"><span>DRQ</span><small>Foto direktur<br>ditambahkan melalui Pengaturan</small></div>
+              </div>
+              <div class="director-details">
+                <span class="director-label">PIMPINAN BADAN USAHA</span>
+                <h3 id="directorDashboardName">Nama Direktur</h3>
+                <p class="director-role" id="directorDashboardRole">Direktur Badan Usaha Dayah Ruhul Qur’ani</p>
+                <div class="director-divider"></div>
+                <blockquote id="directorDashboardQuote">“Kebersihan dan kerapian adalah bagian dari pelayanan. Semoga setiap ikhtiar memudahkan santri dalam menuntut ilmu.”</blockquote>
+              </div>
+              <div class="director-card-glow"></div>
+            </article>
+          </section>
+        </div>
         <div class="page-heading dashboard-heading">
           <div><p class="eyebrow">RINGKASAN</p><h1>Dashboard</h1><p class="muted">Semua pencatatan laundry dalam satu tempat.</p></div>
           <button class="btn btn-primary" data-goto="input">＋ Catat laundry</button>
@@ -113,27 +131,11 @@
           <article class="stat-card premium-stat"><div class="stat-top"><span>Total laundry</span><span class="stat-icon teal">↕</span></div><strong id="statKg">0 kg</strong><small id="statPeriodLabel">Periode terbaru</small></article>
           <article class="stat-card premium-stat"><div class="stat-top"><span>Tahap tercatat</span><span class="stat-icon amber">▣</span></div><strong id="statTahap">0</strong><small>Memiliki catatan laundry</small></article>
         </div>
-        <div class="content-grid dashboard-grid">
-          <article class="panel premium-panel"><div class="panel-heading"><div><h2>Periode laundry</h2><p class="muted">Pantau Tahap 1 sampai Tahap 8.</p></div><button class="btn btn-light btn-sm" data-goto="tahap">Kelola tahap</button></div><div id="dashboardStages" class="stage-list"><div class="empty-state">Memuat data…</div></div></article>
-          <article class="panel quick-panel premium-panel"><div class="panel-heading"><div><h2>Akses cepat</h2><p class="muted">Menu yang sering digunakan.</p></div></div><button class="quick-action" data-goto="input"><span class="quick-icon">＋</span><span><strong>Input laundry</strong><small>Catat berat dan jumlah pakaian</small></span><b>→</b></button><button class="quick-action" data-goto="santri"><span class="quick-icon">♙</span><span><strong>Tambah santri</strong><small>Kelola data santri dan kamar</small></span><b>→</b></button><button class="quick-action" data-goto="laporan"><span class="quick-icon">▤</span><span><strong>Buat laporan PDF</strong><small>Gabungkan rekap semua kamar</small></span><b>→</b></button></article>
-        </div>
+        <div class="content-grid dashboard-grid dashboard-main-grid">
+          <article class="panel premium-panel dashboard-period-panel"><div class="panel-heading"><div><h2>Periode laundry</h2><p class="muted">Pantau Tahap 1 sampai Tahap 8.</p></div><button class="btn btn-light btn-sm" data-goto="tahap">Kelola tahap</button></div><div id="dashboardStages" class="stage-list"><div class="empty-state">Memuat data…</div></div></article>
 
-        <section class="director-section">
-          <div class="director-section-heading"><div><p class="eyebrow">ARAHAN & MOTIVASI</p><h2>Direktur Badan Usaha Dayah</h2><p class="muted">Pesan dan motivasi untuk pelayanan yang lebih baik.</p></div><span class="director-section-mark">✦</span></div>
-          <article class="director-card" id="directorCard">
-            <div class="director-photo-wrap" id="directorDashboardPhoto">
-              <div class="director-photo-placeholder"><span>DRQ</span><small>Foto direktur<br>ditambahkan melalui Pengaturan</small></div>
-            </div>
-            <div class="director-details">
-              <span class="director-label">PIMPINAN BADAN USAHA</span>
-              <h3 id="directorDashboardName">Nama Direktur</h3>
-              <p class="director-role" id="directorDashboardRole">Direktur Badan Usaha Dayah Ruhul Qur’ani</p>
-              <div class="director-divider"></div>
-              <blockquote id="directorDashboardQuote">“Kebersihan dan kerapian adalah bagian dari pelayanan. Semoga setiap ikhtiar memudahkan santri dalam menuntut ilmu.”</blockquote>
-            </div>
-            <div class="director-card-glow"></div>
-          </article>
-        </section>
+        </div>
+        <article class="panel quick-panel premium-panel dashboard-quick-panel"><div class="panel-heading"><div><h2>Akses cepat</h2><p class="muted">Menu yang sering digunakan.</p></div></div><div class="quick-actions-grid"><button class="quick-action" data-goto="input"><span class="quick-icon">＋</span><span><strong>Input laundry</strong><small>Catat berat dan jumlah pakaian</small></span><b>→</b></button><button class="quick-action" data-goto="santri"><span class="quick-icon">♙</span><span><strong>Tambah santri</strong><small>Kelola data santri dan kamar</small></span><b>→</b></button><button class="quick-action" data-goto="laporan"><span class="quick-icon">▤</span><span><strong>Buat laporan PDF</strong><small>Gabungkan rekap semua kamar</small></span><b>→</b></button></div></article>
       </section>
 
       <section id="view-input" class="view-section hidden">
@@ -152,7 +154,7 @@
           </article>
           <aside class="panel helper-panel"><div class="helper-icon">✦</div><h3>Catatan otomatis</h3><p class="muted">Biodata diambil dari data santri. Kamu tidak perlu memilih jenjang atau kamar saat mencatat laundry.</p><div class="helper-rule"><span>01</span><div><strong>Pilih santri</strong><small>Gunakan nama atau NIS.</small></div></div><div class="helper-rule"><span>02</span><div><strong>Isi kilogram</strong><small>Jumlah pakaian opsional.</small></div></div><div class="helper-rule"><span>03</span><div><strong>Simpan</strong><small>Catatan masuk ke rekap tahap.</small></div></div><div class="notice-box"><strong>Anti-duplikat</strong><p>Satu santri hanya dapat dicatat sekali pada tahap yang sama.</p></div></aside>
         </div>
-        <article class="panel table-panel"><div class="panel-heading"><div><h2>Catatan pada tahap ini</h2><p class="muted">Daftar catatan yang sudah disimpan.</p></div><div id="stageTotals" class="total-chip">0 catatan · 0 kg</div></div><div class="table-wrap"><table><thead><tr><th>Nama santri</th><th>Jenjang</th><th>Kamar</th><th>Berat</th><th>Jumlah pakaian</th><th>Waktu input</th></tr></thead><tbody id="stageRecordsBody"><tr><td colspan="6" class="empty-cell">Pilih periode dan tahap.</td></tr></tbody></table></div></article>
+        <article class="panel table-panel"><div class="panel-heading"><div><h2>Catatan pada tahap ini</h2><p class="muted">Daftar catatan yang sudah disimpan.</p></div><div id="stageTotals" class="total-chip">0 catatan · 0 kg</div></div><div class="table-wrap"><table><thead><tr><th>Nama santri</th><th>Jenjang</th><th>Kamar</th><th>Berat</th><th>Jumlah pakaian</th><th>Waktu input</th><th>Aksi</th></tr></thead><tbody id="stageRecordsBody"><tr><td colspan="7" class="empty-cell">Pilih periode dan tahap.</td></tr></tbody></table></div></article>
       </section>
 
       <section id="view-santri" class="view-section hidden">

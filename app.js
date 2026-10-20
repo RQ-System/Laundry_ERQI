@@ -140,6 +140,7 @@ function wireEvents() {
   $('#mobileMenuBtn').addEventListener('click', () => $('#sidebar').classList.toggle('open'));
   $('#inputPeriod').addEventListener('change', () => { populateStageSelect(); loadStageRecords(); });
   $('#inputStage').addEventListener('change', loadStageRecords);
+  $('#stageRecordsBody').addEventListener('click', onLaundryRecordAction);
   $('#studentSearch').addEventListener('input', onStudentSearch);
   $('#studentSearch').addEventListener('keydown', (event) => {
     if (event.key === 'Escape') $('#studentSuggestions').classList.add('hidden');
@@ -258,7 +259,7 @@ function populateStageSelect() {
   $('#inputStage').innerHTML = `<option value="">Pilih tahap</option>${stages.map(stage => `<option value="${stage.id}">Tahap ${stage.nomor_tahap} · ${escapeHtml(shortDate(stage.tanggal_laundry))}</option>`).join('')}`;
   if (oldValue && stages.some(stage => stage.id === oldValue)) $('#inputStage').value = oldValue;
   else if (stages.length) $('#inputStage').value = stages[0].id;
-  if (!stages.length) $('#stageRecordsBody').innerHTML = '<tr><td colspan="6" class="empty-cell">Belum ada tahap untuk periode ini. Buat tahap di menu Periode & tahap.</td></tr>';
+  if (!stages.length) $('#stageRecordsBody').innerHTML = '<tr><td colspan="7" class="empty-cell">Belum ada tahap untuk periode ini. Buat tahap di menu Periode & tahap.</td></tr>'; 
 }
 
 function populateRoomSelect(selectedRoomId = '') {
@@ -383,20 +384,39 @@ async function loadStageRecords() {
   const stageId = $('#inputStage').value;
   const tbody = $('#stageRecordsBody');
   if (!stageId) {
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-cell">Pilih tahap laundry.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-cell">Pilih tahap laundry.</td></tr>';
     $('#stageTotals').textContent = '0 catatan · 0 kg';
     return;
   }
-  tbody.innerHTML = '<tr><td colspan="6" class="empty-cell">Memuat catatan…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="7" class="empty-cell">Memuat catatan…</td></tr>';
   const { data, error } = await state.supabase.from('catatan_laundry').select('*').eq('tahap_id', stageId).order('created_at', {ascending:false});
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty-cell">${escapeHtml(friendlyError(error))}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-cell">${escapeHtml(friendlyError(error))}</td></tr>`;
     return;
   }
   const rows = data || [];
   const totalKg = rows.reduce((sum,row) => sum + Number(row.berat_kg || 0), 0);
   $('#stageTotals').textContent = `${rows.length} catatan · ${fmt.format(totalKg)} kg`;
-  tbody.innerHTML = rows.length ? rows.map(row => `<tr><td><div class="person-cell"><span class="mini-avatar">${escapeHtml(initials(row.santri_nama_snapshot))}</span><span><strong>${escapeHtml(row.santri_nama_snapshot)}</strong></span></div></td><td>${escapeHtml(row.jenjang_nama_snapshot)}</td><td>${escapeHtml(row.kamar_nama_snapshot)}</td><td><strong>${fmt.format(Number(row.berat_kg))} kg</strong></td><td>${row.jumlah_pakaian === null ? '<span class="muted">—</span>' : fmtInt.format(row.jumlah_pakaian)}</td><td>${escapeHtml(new Date(row.created_at).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}))}</td></tr>`).join('') : '<tr><td colspan="6" class="empty-cell">Belum ada catatan untuk tahap ini.</td></tr>';
+  tbody.innerHTML = rows.length ? rows.map(row => `<tr><td><div class="person-cell"><span class="mini-avatar">${escapeHtml(initials(row.santri_nama_snapshot))}</span><span><strong>${escapeHtml(row.santri_nama_snapshot)}</strong></span></div></td><td>${escapeHtml(row.jenjang_nama_snapshot)}</td><td>${escapeHtml(row.kamar_nama_snapshot)}</td><td><strong>${fmt.format(Number(row.berat_kg))} kg</strong></td><td>${row.jumlah_pakaian === null ? '<span class="muted">—</span>' : fmtInt.format(row.jumlah_pakaian)}</td><td>${escapeHtml(new Date(row.created_at).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}))}</td><td><button type="button" class="text-btn danger" data-delete-record="${escapeHtml(row.id)}" data-record-name="${escapeHtml(row.santri_nama_snapshot)}">Hapus</button></td></tr>`).join('') : '<tr><td colspan="7" class="empty-cell">Belum ada catatan untuk tahap ini.</td></tr>';
+}
+
+async function onLaundryRecordAction(event) {
+  const button = event.target.closest('[data-delete-record]');
+  if (!button) return;
+  const recordId = button.dataset.deleteRecord;
+  const studentName = button.dataset.recordName || 'catatan ini';
+  const confirmed = window.confirm(`Hapus catatan laundry ${studentName}? Tindakan ini permanen dan akan mengubah total laporan.`);
+  if (!confirmed) return;
+  setBusy(button, true, 'Menghapus…');
+  const { error } = await state.supabase.from('catatan_laundry').delete().eq('id', recordId);
+  if (error) {
+    showToast(`Catatan belum berhasil dihapus: ${friendlyError(error)}`, 'error');
+    setBusy(button, false);
+    return;
+  }
+  showToast(`Catatan laundry ${studentName} berhasil dihapus.`, 'success');
+  await loadStageRecords();
+  await renderDashboard();
 }
 
 function openStudentForm(student = null) {
